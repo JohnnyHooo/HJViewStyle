@@ -13,6 +13,7 @@
 
 /*
  因为很多APP都会有主题颜色,为了更方便的设置主题色可以重写下面的方法
+ themeGradientEnable = YES 的时候将启用下面配色
  */
 
 - (UIColor *)themeGradientAColor
@@ -27,7 +28,7 @@
 
 - (NSInteger)themeGradientStyle
 {
-    return 1;
+    return 2;
 }
 
 
