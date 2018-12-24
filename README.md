@@ -1,10 +1,10 @@
 <img src="https://github.com/JohnnyHooo/HJViewStyle/blob/master/Example/HJViewStyle/Images.xcassets/head.imageset/icon.png?raw=true" width="100" height="100" alt="Logo" align=left />  
 
 # HJViewStyle
-[![CI Status](http://img.shields.io/travis/Johnny/HJNetwork.svg?style=flat)](https://travis-ci.org/Johnny/HJNetwork)
-[![Version](https://img.shields.io/cocoapods/v/HJNetwork.svg?style=flat)](http://cocoapods.org/pods/HJNetwork)
-[![License](https://img.shields.io/cocoapods/l/HJNetwork.svg?style=flat)](http://cocoapods.org/pods/HJNetwork)
-[![Platform](https://img.shields.io/cocoapods/p/HJNetwork.svg?style=flat)](http://cocoapods.org/pods/HJNetwork)
+[![CI Status](http://img.shields.io/travis/Johnny/HJViewStyle.svg?style=flat)](https://travis-ci.org/Johnny/HJViewStyle)
+[![Version](https://img.shields.io/cocoapods/v/HJViewStyle.svg?style=flat)](http://cocoapods.org/pods/HJViewStyle)
+[![License](https://img.shields.io/cocoapods/l/HJViewStyle.svg?style=flat)](http://cocoapods.org/pods/HJViewStyle)
+[![Platform](https://img.shields.io/cocoapods/p/HJViewStyle.svg?style=flat)](http://cocoapods.org/pods/HJViewStyle)
 
 
 ## 前言
