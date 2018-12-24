@@ -7,6 +7,7 @@
 //
 
 #import "HJViewController.h"
+#import "UIView+HJViewStyle.h"
 
 @interface HJViewController ()
 
@@ -18,6 +19,15 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    
+    self.view.shadowColor = [UIColor whiteColor];
+    self.view.shadowOffset = CGSizeMake(0, 2);
+    self.view.cornerRadius = 10;
+    self.view.borderColor = [UIColor blackColor];
+    self.view.borderWidth = 4;
+    self.view.backgroundColor = [UIColor redColor];
+    
 }
 
 - (void)didReceiveMemoryWarning

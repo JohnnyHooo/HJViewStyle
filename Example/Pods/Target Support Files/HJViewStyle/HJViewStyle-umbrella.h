@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "UIView+HJViewStyle.h"
 
 FOUNDATION_EXPORT double HJViewStyleVersionNumber;
 FOUNDATION_EXPORT const unsigned char HJViewStyleVersionString[];
