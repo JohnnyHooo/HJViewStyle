@@ -1,0 +1,6 @@
+framework module HJViewStyle {
+  umbrella header "HJViewStyle-umbrella.h"
+
+  export *
+  module * { export * }
+}

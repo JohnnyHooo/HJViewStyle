@@ -1,0 +1,16 @@
+PODS:
+  - HJViewStyle (0.1.0)
+
+DEPENDENCIES:
+  - HJViewStyle (from `../`)
+
+EXTERNAL SOURCES:
+  HJViewStyle:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  HJViewStyle: 281e43b46cac4fe80cbbbf7d67b10fc511ab00ab
+
+PODFILE CHECKSUM: ad106b05de409bb97d904b82566a51a3e3f05930
+
+COCOAPODS: 1.5.3
