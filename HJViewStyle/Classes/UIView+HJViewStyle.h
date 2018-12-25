@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, GradientStyle) {
 
 
 /// 阴影Layer
-@property(nonatomic, strong) CALayer *backgroundShadowLayer;
+@property(nonatomic, strong) UIView *shadowView;
 // 渐变Layer
 @property(nonatomic, strong) CAGradientLayer *gradientLayer;
 // 边圆角Layer
