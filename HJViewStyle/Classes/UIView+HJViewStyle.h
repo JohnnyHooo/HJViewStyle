@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-IB_DESIGNABLE
+//IB_DESIGNABLE
 @interface UIView (HJViewStyle)
 
 typedef NS_ENUM(NSInteger, GradientStyle) {
