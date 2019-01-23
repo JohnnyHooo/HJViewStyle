@@ -123,7 +123,7 @@
             self.getStyleLayer.borderWidth = 0;
             self.getStyleLayer.borderColor = [UIColor clearColor].CGColor;
             [self setBorderWithCornerRadius:radius borderWidth:self.borderWidth borderColor:self.borderColor type:corner];
-
+            
         }
     }
 }
@@ -163,7 +163,7 @@
     
     self.gradientLayer.mask = clipLayer;
     self.shadowView.layer.mask = clipLayer;
-
+    
 }
 
 
@@ -291,7 +291,7 @@
                 self.shadowView.layer.shadowOffset = CGSizeZero;
             }
         }
-
+        
         return self.shadowView.layer;
     }else{
         return self.layer;
@@ -419,6 +419,7 @@
     }
     [self refreshRoundingCorners];
     [self setLayerCcircleRadius];
+    self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.bounds, NULL);
 }
 
 
@@ -433,6 +434,7 @@
     }
     [self refreshRoundingCorners];
     [self setLayerCcircleRadius];
+    self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.bounds, NULL);
 }
 
 - (void)hj_removeFromSuperview
