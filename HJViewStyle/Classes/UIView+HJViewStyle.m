@@ -366,9 +366,19 @@
 //渐变layer
 - (void)drawingGradientLayer{
     
-    UIColor *colorA = self.gradientAColor?:[self valueForKey:@"themeGradientAColor"];
-    UIColor *colorB = self.gradientBColor?:[self valueForKey:@"themeGradientBColor"];
-    GradientStyle gradientStyle = self.gradientStyle?:[[self valueForKey:@"themeGradientStyle"] integerValue];
+    UIColor *colorA = self.gradientAColor;
+    UIColor *colorB = self.gradientBColor;
+    GradientStyle gradientStyle = self.gradientStyle;
+    
+    if (!colorA && [self respondsToSelector:@selector(themeGradientAColor)]) {
+        colorA = [self valueForKey:@"themeGradientAColor"];
+    }
+    if (!colorB && [self respondsToSelector:@selector(themeGradientBColor)]) {
+        colorB = [self valueForKey:@"themeGradientBColor"];
+    }
+    if (!gradientStyle && [self respondsToSelector:@selector(gradientStyle)]) {
+        gradientStyle = [[self valueForKey:@"themeGradientStyle"] integerValue];
+    }
     
     if (colorA && colorB) {
         if (!self.gradientLayer) {
@@ -419,7 +429,7 @@
     }
     [self refreshRoundingCorners];
     [self setLayerCcircleRadius];
-    self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.bounds, NULL);
+    self.shadowView.layer.shadowPath = CGPathCreateWithRect(frame, NULL);
 }
 
 
@@ -434,7 +444,10 @@
     }
     [self refreshRoundingCorners];
     [self setLayerCcircleRadius];
-    self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.bounds, NULL);
+    if (self.cornerRadius) {
+        <#statements#>
+    }
+    self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.frame, NULL);
 }
 
 - (void)hj_removeFromSuperview
