@@ -376,7 +376,7 @@
     if (!colorB && [self respondsToSelector:@selector(themeGradientBColor)]) {
         colorB = [self valueForKey:@"themeGradientBColor"];
     }
-    if (!gradientStyle && [self respondsToSelector:@selector(gradientStyle)]) {
+    if (!gradientStyle && [self respondsToSelector:@selector(themeGradientStyle)]) {
         gradientStyle = [[self valueForKey:@"themeGradientStyle"] integerValue];
     }
     
@@ -406,7 +406,18 @@
     }
 }
 
+- (UIColor *)themeGradientAColor{
+    return [UIColor redColor];
+}
 
+- (UIColor *)themeGradientBColor{
+    return [UIColor blueColor];
+}
+
+- (NSInteger)themeGradientStyle
+{
+    return 1;
+}
 
 // 渐变空视图，只在有圆角的时候使用
 - (CAGradientLayer *)gradientLayer{
@@ -429,7 +440,9 @@
     }
     [self refreshRoundingCorners];
     [self setLayerCcircleRadius];
-    self.shadowView.layer.shadowPath = CGPathCreateWithRect(frame, NULL);
+    if (!self.layer.cornerRadius) {
+        self.shadowView.layer.shadowPath = CGPathCreateWithRect(frame, NULL);
+    }
 }
 
 
@@ -444,10 +457,9 @@
     }
     [self refreshRoundingCorners];
     [self setLayerCcircleRadius];
-    if (self.cornerRadius) {
-        <#statements#>
+    if (!self.layer.cornerRadius) {
+        self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.frame, NULL);
     }
-    self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.frame, NULL);
 }
 
 - (void)hj_removeFromSuperview
