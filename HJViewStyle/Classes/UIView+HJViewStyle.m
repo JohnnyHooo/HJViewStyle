@@ -440,7 +440,7 @@
     }
     [self refreshRoundingCorners];
     [self setLayerCcircleRadius];
-    if (!self.layer.cornerRadius) {
+    if (self.shadowView.layer && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
         self.shadowView.layer.shadowPath = CGPathCreateWithRect(frame, NULL);
     }
 }
@@ -457,7 +457,7 @@
     }
     [self refreshRoundingCorners];
     [self setLayerCcircleRadius];
-    if (!self.layer.cornerRadius) {
+    if (self.shadowView.layer && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
         self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.frame, NULL);
     }
 }
