@@ -10,6 +10,7 @@
 #import "UIView+HJViewStyle.h"
 
 @interface HJViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *hjViewStyleLabel;
 
 @end
 
@@ -20,15 +21,26 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    /*
-     代码示例
-    self.view.shadowColor = [UIColor whiteColor];
-    self.view.shadowOffset = CGSizeMake(0, 2);
-    self.view.cornerRadius = 10;
-    self.view.borderColor = [UIColor blackColor];
-    self.view.borderWidth = 4;
-    self.view.backgroundColor = [UIColor redColor];
-    */
+ 
+
+    //代码示例
+    UILabel *label = [UILabel new];
+    label.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 120, CGRectGetMidY(_hjViewStyleLabel.frame), 100, 100);
+    label.backgroundColor = UIColor.blackColor;
+    label.text = @"代码View";
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    [self.view addSubview:label];
+    
+    
+    label.shadowRadius = 10;
+    label.shadowColor = UIColor.whiteColor;
+    label.shadowOffset = CGSizeMake(0, 0);
+    label.shadowOpacity = 1;
+    
+    label.cornerRadius = 20;
+    label.borderColor = UIColor.whiteColor;
+    label.borderWidth = 10;
 }
 
 - (void)didReceiveMemoryWarning
