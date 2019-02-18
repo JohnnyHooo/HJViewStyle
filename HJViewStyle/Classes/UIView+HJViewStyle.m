@@ -266,22 +266,6 @@
             
             self.shadowView = [[UIView alloc] init];
             self.shadowView.backgroundColor = self.backgroundColor;
-            // 禁止将 AutoresizingMask 转换为 Constraints
-            self.shadowView.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.superview insertSubview:self.shadowView belowSubview:self];
-            // 添加 right 约束
-            NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.shadowView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
-            [self.superview addConstraint:rightConstraint];
-            
-            // 添加 left 约束
-            NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:self.shadowView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
-            [self.superview addConstraint:leftConstraint];
-            // 添加 top 约束
-            NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.shadowView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
-            [self.superview addConstraint:topConstraint];
-            // 添加 bottom 约束
-            NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.shadowView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
-            [self.superview addConstraint:bottomConstraint];
             
             self.shadowView.layer.shadowOpacity = self.layer.shadowOpacity?:1;
             self.shadowView.layer.shadowRadius = self.layer.shadowRadius?:1;
@@ -291,7 +275,25 @@
                 self.shadowView.layer.shadowOffset = CGSizeZero;
             }
         }
+        // 禁止将 AutoresizingMask 转换为 Constraints
+        self.shadowView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.superview insertSubview:self.shadowView belowSubview:self];
+        // 添加 right 约束
+        NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.shadowView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
+        [self.superview addConstraint:rightConstraint];
         
+        // 添加 left 约束
+        NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:self.shadowView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
+        [self.superview addConstraint:leftConstraint];
+        // 添加 top 约束
+        NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.shadowView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
+        [self.superview addConstraint:topConstraint];
+        // 添加 bottom 约束
+        NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.shadowView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+        [self.superview addConstraint:bottomConstraint];
+
+        [self.superview insertSubview:self.shadowView belowSubview:self];
+
         return self.shadowView.layer;
     }else{
         return self.layer;

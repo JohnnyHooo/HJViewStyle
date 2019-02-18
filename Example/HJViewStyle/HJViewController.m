@@ -30,7 +30,6 @@
     label.text = @"代码View";
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
-    [self.view addSubview:label];
     
     
     label.shadowRadius = 10;
@@ -41,6 +40,8 @@
     label.cornerRadius = 20;
     label.borderColor = UIColor.whiteColor;
     label.borderWidth = 10;
+    [self.view addSubview:label];
+
 }
 
 - (void)didReceiveMemoryWarning
