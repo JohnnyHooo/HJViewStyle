@@ -25,7 +25,7 @@
 
     //代码示例
     UILabel *label = [UILabel new];
-    label.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 120, 100, 100, 100);
+    label.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 120, CGRectGetMidY(_hjViewStyleLabel.frame), 100, 100);
     label.backgroundColor = UIColor.redColor;
     label.text = @"代码View";
     label.textAlignment = NSTextAlignmentCenter;
