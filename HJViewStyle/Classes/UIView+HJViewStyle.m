@@ -311,11 +311,12 @@ CG_INLINE CGRect CGRectScale(CGRect rect, CGFloat scale)
         }
         objc_setAssociatedObject(self, @selector(shadowView), shadowView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
+
     // 禁止将 AutoresizingMask 转换为 Constraints
     shadowView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.superview insertSubview:shadowView belowSubview:self];
     // 添加 right 约束
-    NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:shadowView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
+    NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:shadowView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
     [self.superview addConstraint:rightConstraint];
     
     // 添加 left 约束
