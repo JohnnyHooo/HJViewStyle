@@ -41,8 +41,15 @@
     self.clipsToBounds = true;
     if (@available(iOS 11.0, *)) {
         self.layer.maskedCorners = maskedCorners;
-        self.shadowView.layer.maskedCorners = maskedCorners;
-        self.gradientLayer.maskedCorners = maskedCorners;
+        UIView *shadowView = objc_getAssociatedObject(self, @selector(shadowView));
+        if (shadowView) {
+            self.shadowView.layer.maskedCorners = maskedCorners;
+        }
+        CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
+        if (gradientLayer) {
+            self.gradientLayer.maskedCorners = maskedCorners;
+        }
+        
     } else {
         [self refreshRoundingCorners];
     }
@@ -161,9 +168,16 @@
     clipLayer.path = path.CGPath;
     self.layer.mask = clipLayer;
     
-    self.gradientLayer.mask = clipLayer;
-    self.shadowView.layer.mask = clipLayer;
+    UIView *shadowView = objc_getAssociatedObject(self, @selector(shadowView));
+    if (shadowView) {
+        self.shadowView.layer.mask = clipLayer;
+    }
     
+    CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
+    if (gradientLayer) {
+        self.gradientLayer.mask = clipLayer;
+    }
+   
 }
 
 
@@ -204,7 +218,10 @@
     self.clipsToBounds = true;
     self.layer.cornerRadius = cornerRadius;
     self.getStyleLayer.cornerRadius = cornerRadius;
-    self.gradientLayer.cornerRadius = cornerRadius;
+    CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
+    if (gradientLayer) {
+        self.gradientLayer.cornerRadius = cornerRadius;
+    }
 }
 
 
@@ -261,39 +278,6 @@
 //阴影layer
 - (CALayer *)getStyleLayer{
     if (self.shadowColor && self.clipsToBounds) {
-        if (!self.shadowView) {
-            
-            
-            self.shadowView = [[UIView alloc] init];
-            self.shadowView.backgroundColor = self.backgroundColor;
-            
-            self.shadowView.layer.shadowOpacity = self.layer.shadowOpacity?:1;
-            self.shadowView.layer.shadowRadius = self.layer.shadowRadius?:1;
-            self.shadowView.layer.shadowColor = self.shadowColor.CGColor;
-            self.shadowView.layer.cornerRadius = self.cornerRadius;
-            if (CGSizeEqualToSize(self.layer.shadowOffset, self.shadowView.layer.shadowOffset)) {
-                self.shadowView.layer.shadowOffset = CGSizeZero;
-            }
-        }
-        // 禁止将 AutoresizingMask 转换为 Constraints
-        self.shadowView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.superview insertSubview:self.shadowView belowSubview:self];
-        // 添加 right 约束
-        NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.shadowView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
-        [self.superview addConstraint:rightConstraint];
-        
-        // 添加 left 约束
-        NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:self.shadowView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
-        [self.superview addConstraint:leftConstraint];
-        // 添加 top 约束
-        NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.shadowView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
-        [self.superview addConstraint:topConstraint];
-        // 添加 bottom 约束
-        NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.shadowView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
-        [self.superview addConstraint:bottomConstraint];
-
-        [self.superview insertSubview:self.shadowView belowSubview:self];
-
         return self.shadowView.layer;
     }else{
         return self.layer;
@@ -303,7 +287,41 @@
 
 // 阴影空视图，只在有圆角的时候使用
 - (UIView *)shadowView{
-    return objc_getAssociatedObject(self, @selector(shadowView));
+    UIView *shadowView = objc_getAssociatedObject(self, @selector(shadowView));
+    if (!shadowView) {
+        shadowView = [[UIView alloc] init];
+        shadowView.backgroundColor = self.backgroundColor;
+        
+        shadowView.layer.shadowOpacity = self.layer.shadowOpacity?:1;
+        shadowView.layer.shadowRadius = self.layer.shadowRadius?:1;
+        shadowView.layer.shadowColor = self.shadowColor.CGColor;
+        shadowView.layer.cornerRadius = self.cornerRadius;
+        if (CGSizeEqualToSize(self.layer.shadowOffset, shadowView.layer.shadowOffset)) {
+            shadowView.layer.shadowOffset = CGSizeZero;
+        }
+        objc_setAssociatedObject(self, @selector(shadowView), shadowView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    // 禁止将 AutoresizingMask 转换为 Constraints
+    shadowView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.superview insertSubview:shadowView belowSubview:self];
+    // 添加 right 约束
+    NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:shadowView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
+    [self.superview addConstraint:rightConstraint];
+    
+    // 添加 left 约束
+    NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:shadowView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
+    [self.superview addConstraint:leftConstraint];
+    // 添加 top 约束
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:shadowView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
+    [self.superview addConstraint:topConstraint];
+    // 添加 bottom 约束
+    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:shadowView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+    [self.superview addConstraint:bottomConstraint];
+    
+    [self.superview insertSubview:shadowView belowSubview:self];
+    
+    return shadowView;
+    
 }
 
 - (void)setShadowView:(UIView *)shadowView{
@@ -383,12 +401,18 @@
     }
     
     if (colorA && colorB) {
-        if (!self.gradientLayer) {
-            self.gradientLayer = [CAGradientLayer layer];
-            [self.superview.layer insertSublayer:self.gradientLayer below:self.layer];
-        }
-        self.gradientLayer.frame = self.frame;
         
+        UIView *shadowView = objc_getAssociatedObject(self, @selector(shadowView));
+        CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
+        if (shadowView) {
+            self.gradientLayer.frame = self.frame;
+            if (gradientLayer) {
+                self.gradientLayer.frame = self.bounds;
+            }
+        }else if (gradientLayer) {
+            self.gradientLayer.frame = self.frame;
+        }
+
         self.gradientLayer.colors = @[(__bridge id)colorA.CGColor, (__bridge id)colorB.CGColor];
         //            self.gradientLayer.locations = @[@0.5, @0.5];
         if (gradientStyle == GradientStyleLeftToRight) {
@@ -404,7 +428,6 @@
         } else {
             [self refreshRoundingCorners];
         }
-        self.backgroundColor = [UIColor clearColor];
     }
 }
 
@@ -423,7 +446,22 @@
 
 // 渐变空视图，只在有圆角的时候使用
 - (CAGradientLayer *)gradientLayer{
-    return objc_getAssociatedObject(self, @selector(gradientLayer));
+    CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
+    if (!gradientLayer) {
+        gradientLayer = [CAGradientLayer layer];
+        objc_setAssociatedObject(self, @selector(gradientLayer), gradientLayer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    self.backgroundColor = [UIColor clearColor];
+    UIView *shadowView = objc_getAssociatedObject(self, @selector(shadowView));
+    if (shadowView) {
+        shadowView.backgroundColor = [UIColor clearColor];
+//        self.shadowView.alpha = 1;
+        [shadowView.layer addSublayer:gradientLayer];
+//        [self.superview.layer insertSublayer:gradientLayer above:shadowView.layer];
+    }else{
+        [self.superview.layer insertSublayer:gradientLayer below:self.layer];
+    }
+    return gradientLayer;
 }
 
 - (void)setGradientLayer:(CAGradientLayer *)gradientLayer{
@@ -434,15 +472,20 @@
 - (void)hj_setFrame:(CGRect)frame
 {
     [self hj_setFrame:frame];
-    if (self.shadowView.layer) {
+    UIView *shadowView = objc_getAssociatedObject(self, @selector(shadowView));
+    CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
+    if (shadowView) {
         self.shadowView.frame = frame;
-    }
-    if (self.gradientLayer) {
+        if (gradientLayer) {
+            self.gradientLayer.frame = self.bounds;
+        }
+    }else if (gradientLayer) {
         self.gradientLayer.frame = frame;
     }
+
     [self refreshRoundingCorners];
     [self setLayerCcircleRadius];
-    if (self.shadowView.layer && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
+    if (shadowView && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
         self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.layer.bounds, NULL);
     }
 }
@@ -451,15 +494,20 @@
 - (void)hj_layoutSubviews
 {
     [self hj_layoutSubviews];
-    if (self.shadowView.layer) {
+    UIView *shadowView = objc_getAssociatedObject(self, @selector(shadowView));
+    CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
+    if (shadowView) {
         self.shadowView.frame = self.frame;
-    }
-    if (self.gradientLayer) {
+        if (gradientLayer) {
+            self.gradientLayer.frame = self.bounds;
+        }
+    }else if (gradientLayer) {
         self.gradientLayer.frame = self.frame;
     }
+
     [self refreshRoundingCorners];
     [self setLayerCcircleRadius];
-    if (self.shadowView.layer && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
+    if (shadowView && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
         self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.layer.bounds, NULL);
     }
 }
@@ -467,10 +515,12 @@
 - (void)hj_removeFromSuperview
 {
     [self hj_removeFromSuperview];
-    if (self.shadowView) {
+    UIView *shadowView = objc_getAssociatedObject(self, @selector(shadowView));
+    if (shadowView) {
         [self.shadowView removeFromSuperview];
     }
-    if (self.gradientLayer) {
+    CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
+    if (gradientLayer) {
         [self.gradientLayer removeFromSuperlayer];
     }
 }
@@ -479,10 +529,13 @@
 - (void)hj_setAlpha:(CGFloat)alpha{
     [self hj_setAlpha:alpha];
     
-    if (self.shadowView) {
+    UIView *shadowView = objc_getAssociatedObject(self, @selector(shadowView));
+    if (shadowView) {
         self.shadowView.alpha = alpha;
     }
-    if (self.gradientLayer) {
+    
+    CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
+    if (gradientLayer) {
         self.gradientLayer.opacity = alpha;
     }
 }
@@ -490,10 +543,12 @@
 - (void)hj_setHidden:(BOOL)hidden
 {
     [self hj_setHidden:hidden];
-    if (self.shadowView) {
+    UIView *shadowView = objc_getAssociatedObject(self, @selector(shadowView));
+    if (shadowView) {
         self.shadowView.hidden = hidden;
     }
-    if (self.gradientLayer) {
+    CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
+    if (gradientLayer) {
         self.gradientLayer.hidden = hidden;
     }
 }
@@ -501,3 +556,4 @@
 
 
 @end
+

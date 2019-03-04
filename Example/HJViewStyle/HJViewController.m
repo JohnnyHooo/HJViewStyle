@@ -25,12 +25,12 @@
 
     //代码示例
     UILabel *label = [UILabel new];
-    label.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 120, CGRectGetMidY(_hjViewStyleLabel.frame), 100, 100);
-    label.backgroundColor = UIColor.blackColor;
+    label.frame = CGRectMake(CGRectGetWidth(self.view.frame) - 120, 100, 100, 100);
+    label.backgroundColor = UIColor.redColor;
     label.text = @"代码View";
     label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor whiteColor];
-    
+    label.textColor = UIColor.whiteColor;
+
     
     label.shadowRadius = 10;
     label.shadowColor = UIColor.whiteColor;
@@ -40,6 +40,10 @@
     label.cornerRadius = 20;
     label.borderColor = UIColor.whiteColor;
     label.borderWidth = 10;
+
+    label.gradientStyle = GradientStyleLeftToRight;
+    label.gradientAColor = [UIColor purpleColor];
+    label.gradientBColor = [UIColor redColor];
     [self.view addSubview:label];
 
 }
