@@ -42,8 +42,8 @@
     label.borderWidth = 10;
 
     label.gradientStyle = GradientStyleLeftToRight;
-    label.gradientAColor = [UIColor purpleColor];
-    label.gradientBColor = [UIColor redColor];
+    label.gradientAColor = UIColor.redColor;
+    label.gradientBColor = UIColor.purpleColor;
     [self.view addSubview:label];
 
 }
