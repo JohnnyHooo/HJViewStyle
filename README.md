@@ -39,14 +39,29 @@ pod 'HJViewStyle'
 #import "UIView+HJViewStyle.h"
 中的声明以及注释。**
 ```objc
-    view.shadowRadius = 10;
-    view.shadowColor = UIColor.whiteColor;
-    view.shadowOffset = CGSizeMake(0, 0);
-    view.shadowOpacity = 1;
+    //代码示例
+    UILabel *label = [UILabel new];
+    label.frame = CGRectMake(100, 100, 100, 100);
+    label.backgroundColor = UIColor.redColor;
+    label.text = @"代码View";
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = UIColor.whiteColor;
+
     
-    view.cornerRadius = 20;
-    view.borderColor = UIColor.whiteColor;
-    view.borderWidth = 10;
+    label.shadowRadius = 10;
+    label.shadowColor = UIColor.whiteColor;
+    label.shadowOffset = CGSizeMake(0, 0);
+    label.shadowOpacity = 1;
+    
+    label.cornerRadius = 20;
+    label.borderColor = UIColor.whiteColor;
+    label.borderWidth = 10;
+
+    label.gradientStyle = GradientStyleLeftToRight;
+    label.gradientAColor = UIColor.redColor;
+    label.gradientBColor = UIColor.purpleColor;
+    [self.view addSubview:label];
+
 ```
 
 
