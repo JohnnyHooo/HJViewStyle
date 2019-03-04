@@ -181,13 +181,14 @@ CG_INLINE CGRect CGRectScale(CGRect rect, CGFloat scale)
     UIView *shadowView = objc_getAssociatedObject(self, @selector(shadowView));
     if (shadowView) {
         self.shadowView.layer.mask = clipLayer;
+        self.shadowView.layer.shadowPath = path.CGPath;
     }
     
     CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
     if (gradientLayer) {
         self.gradientLayer.mask = clipLayer;
+        self.gradientLayer.shadowPath = path.CGPath;
     }
-   
 }
 
 
@@ -498,7 +499,9 @@ CG_INLINE CGRect CGRectScale(CGRect rect, CGFloat scale)
     [self refreshRoundingCorners];
     [self setLayerCcircleRadius];
     if (shadowView && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
-        self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.layer.bounds, NULL);
+        CGFloat cornerRadius = [objc_getAssociatedObject(self, @selector(cornerRadius)) floatValue];
+        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.layer.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(cornerRadius, cornerRadius)];
+        self.shadowView.layer.shadowPath = path.CGPath;
     }
 }
 
@@ -520,7 +523,9 @@ CG_INLINE CGRect CGRectScale(CGRect rect, CGFloat scale)
     [self refreshRoundingCorners];
     [self setLayerCcircleRadius];
     if (shadowView && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
-        self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.layer.bounds, NULL);
+        CGFloat cornerRadius = [objc_getAssociatedObject(self, @selector(cornerRadius)) floatValue];
+        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.layer.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(cornerRadius, cornerRadius)];
+        self.shadowView.layer.shadowPath = path.CGPath;
     }
 }
 
