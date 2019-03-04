@@ -32,10 +32,10 @@
     label.textColor = UIColor.whiteColor;
 
     
-    label.shadowRadius = 10;
-    label.shadowColor = UIColor.whiteColor;
-    label.shadowOffset = CGSizeMake(0, 0);
-    label.shadowOpacity = 1;
+//    label.shadowRadius = 10;
+//    label.shadowColor = UIColor.whiteColor;
+//    label.shadowOffset = CGSizeMake(0, 0);
+//    label.shadowOpacity = 1;
     
     label.cornerRadius = 20;
     label.borderColor = UIColor.whiteColor;

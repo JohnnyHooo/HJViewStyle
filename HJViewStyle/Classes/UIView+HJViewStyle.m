@@ -9,6 +9,16 @@
 
 #import <objc/runtime.h>
 
+CG_INLINE CGRect CGRectScale(CGRect rect, CGFloat scale)
+{
+    CGFloat width = rect.size.width * scale;
+    CGFloat height = rect.size.height * scale;
+    CGFloat x = (rect.size.width-width)/2.0;
+    CGFloat y = (rect.size.height-height)/2.0;
+    return CGRectMake(rect.origin.x + x, rect.origin.y + y, width, height);
+}
+#define kShrinkScale 0.99
+
 @implementation UIView (HJViewStyle)
 @dynamic roundTop, roundLeft, roundBottom, borderWidth, borderColor, cornerRadius, shadowColor, shadowRadius, shadowOffset, shadowOpacity, themeGradientEnable, gradientStyle, gradientStyleEnum, gradientAColor, gradientBColor, shadowView, gradientLayer;
 
@@ -405,13 +415,14 @@
         UIView *shadowView = objc_getAssociatedObject(self, @selector(shadowView));
         CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
         if (shadowView) {
-            self.gradientLayer.frame = self.frame;
+            self.shadowView.frame = self.frame;
             if (gradientLayer) {
-                self.gradientLayer.frame = self.bounds;
+                self.gradientLayer.frame = CGRectScale(self.bounds, kShrinkScale);
             }
         }else if (gradientLayer) {
-            self.gradientLayer.frame = self.frame;
+            self.gradientLayer.frame = CGRectScale(self.frame, kShrinkScale);
         }
+
 
         self.gradientLayer.colors = @[(__bridge id)colorA.CGColor, (__bridge id)colorB.CGColor];
         //            self.gradientLayer.locations = @[@0.5, @0.5];
@@ -477,10 +488,10 @@
     if (shadowView) {
         self.shadowView.frame = frame;
         if (gradientLayer) {
-            self.gradientLayer.frame = self.bounds;
+            self.gradientLayer.frame = CGRectScale(self.bounds, kShrinkScale);
         }
     }else if (gradientLayer) {
-        self.gradientLayer.frame = frame;
+        self.gradientLayer.frame = CGRectScale(frame, kShrinkScale);
     }
 
     [self refreshRoundingCorners];
@@ -499,10 +510,10 @@
     if (shadowView) {
         self.shadowView.frame = self.frame;
         if (gradientLayer) {
-            self.gradientLayer.frame = self.bounds;
+            self.gradientLayer.frame = CGRectScale(self.bounds, kShrinkScale);
         }
     }else if (gradientLayer) {
-        self.gradientLayer.frame = self.frame;
+        self.gradientLayer.frame = CGRectScale(self.frame, kShrinkScale);
     }
 
     [self refreshRoundingCorners];
