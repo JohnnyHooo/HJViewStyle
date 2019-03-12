@@ -465,15 +465,7 @@ CG_INLINE CGRect CGRectScale(CGRect rect, CGFloat scale)
         objc_setAssociatedObject(self, @selector(gradientLayer), gradientLayer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     self.backgroundColor = [UIColor clearColor];
-    UIView *shadowView = objc_getAssociatedObject(self, @selector(shadowView));
-    if (shadowView) {
-        shadowView.backgroundColor = [UIColor clearColor];
-//        self.shadowView.alpha = 1;
-        [shadowView.layer addSublayer:gradientLayer];
-//        [self.superview.layer insertSublayer:gradientLayer above:shadowView.layer];
-    }else{
-        [self.superview.layer insertSublayer:gradientLayer below:self.layer];
-    }
+    [self.layer insertSublayer:gradientLayer atIndex:0];
     return gradientLayer;
 }
 
@@ -489,11 +481,9 @@ CG_INLINE CGRect CGRectScale(CGRect rect, CGFloat scale)
     CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
     if (shadowView) {
         self.shadowView.frame = frame;
-        if (gradientLayer) {
-            self.gradientLayer.frame = CGRectScale(self.bounds, kShrinkScale);
-        }
-    }else if (gradientLayer) {
-        self.gradientLayer.frame = CGRectScale(frame, kShrinkScale);
+    }
+    if (gradientLayer) {
+        self.gradientLayer.frame = CGRectScale(self.bounds, kShrinkScale);
     }
 
     [self refreshRoundingCorners];
@@ -513,11 +503,9 @@ CG_INLINE CGRect CGRectScale(CGRect rect, CGFloat scale)
     CAGradientLayer *gradientLayer = objc_getAssociatedObject(self, @selector(gradientLayer));
     if (shadowView) {
         self.shadowView.frame = self.frame;
-        if (gradientLayer) {
-            self.gradientLayer.frame = CGRectScale(self.bounds, kShrinkScale);
-        }
-    }else if (gradientLayer) {
-        self.gradientLayer.frame = CGRectScale(self.frame, kShrinkScale);
+    }
+    if (gradientLayer) {
+        self.gradientLayer.frame = CGRectScale(self.bounds, kShrinkScale);
     }
 
     [self refreshRoundingCorners];
