@@ -17,7 +17,6 @@ CG_INLINE CGRect CGRectScale(CGRect rect, CGFloat scale)
     CGFloat y = (rect.size.height-height)/2.0;
     return CGRectMake(rect.origin.x + x, rect.origin.y + y, width, height);
 }
-#define kShrinkScale 0.99
 
 @implementation UIView (HJViewStyle)
 @dynamic roundTop, roundLeft, roundBottom, borderWidth, borderColor, cornerRadius, shadowColor, shadowRadius, shadowOffset, shadowOpacity, themeGradientEnable, gradientStyle, gradientStyleEnum, gradientAColor, gradientBColor, shadowView, gradientLayer;
@@ -419,10 +418,10 @@ CG_INLINE CGRect CGRectScale(CGRect rect, CGFloat scale)
         if (shadowView) {
             self.shadowView.frame = self.frame;
             if (gradientLayer) {
-                self.gradientLayer.frame = CGRectScale(self.bounds, kShrinkScale);
+                self.gradientLayer.frame = CGRectScale(self.bounds, 1-self.borderWidth);
             }
         }else if (gradientLayer) {
-            self.gradientLayer.frame = CGRectScale(self.frame, kShrinkScale);
+            self.gradientLayer.frame = CGRectScale(self.frame, 1-self.borderWidth);
         }
 
 
@@ -483,7 +482,7 @@ CG_INLINE CGRect CGRectScale(CGRect rect, CGFloat scale)
         self.shadowView.frame = frame;
     }
     if (gradientLayer) {
-        self.gradientLayer.frame = CGRectScale(self.bounds, kShrinkScale);
+        self.gradientLayer.frame = CGRectScale(self.bounds, 1-self.borderWidth);
     }
 
     [self refreshRoundingCorners];
@@ -505,7 +504,7 @@ CG_INLINE CGRect CGRectScale(CGRect rect, CGFloat scale)
         self.shadowView.frame = self.frame;
     }
     if (gradientLayer) {
-        self.gradientLayer.frame = CGRectScale(self.bounds, kShrinkScale);
+        self.gradientLayer.frame = CGRectScale(self.bounds, 1-self.borderWidth);
     }
 
     [self refreshRoundingCorners];
