@@ -61,5 +61,8 @@ typedef NS_ENUM(NSInteger, GradientStyle) {
 @property(nonatomic, strong) CAShapeLayer *maskLayer;
 
 
+///上一次大小
+@property (nonatomic, copy) NSString *lastSize;
+
 @end
 

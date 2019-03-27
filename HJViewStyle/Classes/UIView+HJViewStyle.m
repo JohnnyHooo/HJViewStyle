@@ -9,7 +9,6 @@
 
 #import <objc/runtime.h>
 
-static CGSize kOriginalSize;
 @implementation UIView (HJViewStyle)
 @dynamic roundTop, roundLeft, roundBottom, borderWidth, borderColor, cornerRadius, shadowColor, shadowRadius, shadowOffset, shadowOpacity, themeGradientEnable, gradientStyle, gradientStyleEnum, gradientAColor, gradientBColor, shadowView, gradientLayer;
 
@@ -102,6 +101,17 @@ static CGSize kOriginalSize;
 - (void)setMaskLayer:(CAShapeLayer *)maskLayer{
     objc_setAssociatedObject(self, @selector(maskLayer), maskLayer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
+///上一次大小
+- (NSString *)lastSize{
+    return objc_getAssociatedObject(self, @selector(lastSize));
+}
+
+- (void)setLastSize:(NSString *)lastSize{
+    objc_setAssociatedObject(self, @selector(lastSize), lastSize, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+
 
 //刷新圆角边框
 - (void)refreshRoundingCorners{
@@ -197,8 +207,12 @@ static CGSize kOriginalSize;
 - (void)setCornerRadius:(CGFloat)cornerRadius {
     objc_setAssociatedObject(self, @selector(cornerRadius), @(cornerRadius), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self setLayerCornerRadius:cornerRadius];
-    [self refreshRoundingCorners];
+    
+    if (!CGSizeEqualToSize(CGSizeFromString(self.lastSize), self.frame.size)) {
+        [self refreshRoundingCorners];
+    }
 }
+
 ///设置圆角
 - (void)setLayerCornerRadius:(CGFloat)cornerRadius
 {
@@ -441,15 +455,13 @@ static CGSize kOriginalSize;
     if (self.gradientLayer) {
         self.gradientLayer.frame = frame;
     }
-    if (!CGSizeEqualToSize(kOriginalSize, self.frame.size)) {
-        [self setLayerCcircleRadius];
-    }
+    [self setLayerCcircleRadius];
     if (self.shadowView.layer && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
         //设置阴影路径
         //        self.shadowView.layer.shadowPath = [self getShadowPath].CGPath;
         self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.layer.bounds, NULL);
     }
-    kOriginalSize = self.frame.size;
+    self.lastSize = NSStringFromCGSize(self.frame.size);
 }
 
 
@@ -462,15 +474,14 @@ static CGSize kOriginalSize;
     if (self.gradientLayer) {
         self.gradientLayer.frame = self.frame;
     }
-    if (!CGSizeEqualToSize(kOriginalSize, self.frame.size)) {
-        [self setLayerCcircleRadius];
-    }
+    [self setLayerCcircleRadius];
+
     if (self.shadowView.layer && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
         //设置阴影路径
         //        self.shadowView.layer.shadowPath = [self getShadowPath].CGPath;
         self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.layer.bounds, NULL);
     }
-    kOriginalSize = self.frame.size;
+    self.lastSize = NSStringFromCGSize(self.frame.size);
 }
 
 - (UIBezierPath *)getShadowPath{
