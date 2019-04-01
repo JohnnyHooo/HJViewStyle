@@ -449,75 +449,32 @@
 - (void)hj_setFrame:(CGRect)frame
 {
     [self hj_setFrame:frame];
-    if (self.shadowView.layer) {
-        self.shadowView.frame = frame;
-    }
-    if (self.gradientLayer) {
-        self.gradientLayer.frame = frame;
-    }
-    [self setLayerCcircleRadius];
-    if (self.shadowView.layer && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
-        //设置阴影路径
-        //        self.shadowView.layer.shadowPath = [self getShadowPath].CGPath;
-        self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.layer.bounds, NULL);
-    }
-    self.lastSize = NSStringFromCGSize(self.frame.size);
+    [self refreshLayout];
 }
 
 
 - (void)hj_layoutSubviews
 {
     [self hj_layoutSubviews];
+    [self refreshLayout];
+}
+
+- (void)refreshLayout
+{
     if (self.shadowView.layer) {
         self.shadowView.frame = self.frame;
     }
     if (self.gradientLayer) {
         self.gradientLayer.frame = self.frame;
     }
-    [self setLayerCcircleRadius];
-
+    
     if (self.shadowView.layer && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
         //设置阴影路径
-        //        self.shadowView.layer.shadowPath = [self getShadowPath].CGPath;
-        self.shadowView.layer.shadowPath = CGPathCreateWithRect(self.layer.bounds, NULL);
+        self.shadowView.layer.shadowPath = self.layer.shadowPath;
     }
+    [self setLayerCcircleRadius];
     self.lastSize = NSStringFromCGSize(self.frame.size);
-}
 
-- (UIBezierPath *)getShadowPath{
-    //路径阴影
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    
-    float width = self.bounds.size.width;
-    float height = self.bounds.size.height;
-    float x = self.bounds.origin.x;
-    float y = self.bounds.origin.y;
-    float addWH = 10;
-    
-    CGPoint topLeft      = self.bounds.origin;
-    CGPoint topMiddle = CGPointMake(x+(width/2),y-addWH);
-    CGPoint topRight     = CGPointMake(x+width,y);
-    
-    CGPoint rightMiddle = CGPointMake(x+width+addWH,y+(height/2));
-    
-    CGPoint bottomRight  = CGPointMake(x+width,y+height);
-    CGPoint bottomMiddle = CGPointMake(x+(width/2),y+height+addWH);
-    CGPoint bottomLeft   = CGPointMake(x,y+height);
-    
-    
-    CGPoint leftMiddle = CGPointMake(x-addWH,y+(height/2));
-    
-    [path moveToPoint:topLeft];
-    //添加四个二元曲线
-    [path addQuadCurveToPoint:topRight
-                 controlPoint:topMiddle];
-    [path addQuadCurveToPoint:bottomRight
-                 controlPoint:rightMiddle];
-    [path addQuadCurveToPoint:bottomLeft
-                 controlPoint:bottomMiddle];
-    [path addQuadCurveToPoint:topLeft
-                 controlPoint:leftMiddle];
-    return path;
 }
 
 - (void)hj_removeFromSuperview
