@@ -38,7 +38,9 @@
 ///设置角圆角
 - (void)setRound:(CACornerMask)maskedCorners
 {
-    self.clipsToBounds = true;
+    if ([self isKindOfClass:[UIImageView class]]) {
+        self.clipsToBounds = true;
+    }
     if (@available(iOS 11.0, *)) {
         self.layer.maskedCorners = maskedCorners;
         self.shadowView.layer.maskedCorners = maskedCorners;
@@ -174,10 +176,7 @@
     
     self.gradientLayer.mask = clipLayer;
     self.shadowView.layer.mask = clipLayer;
-    
 }
-
-
 
 //圆形
 - (BOOL)circle {
@@ -216,7 +215,9 @@
 ///设置圆角
 - (void)setLayerCornerRadius:(CGFloat)cornerRadius
 {
-    self.clipsToBounds = true;
+    if ([self isKindOfClass:[UIImageView class]]) {
+        self.clipsToBounds = true;
+    }
     self.layer.cornerRadius = cornerRadius;
     self.getStyleLayer.cornerRadius = cornerRadius;
     self.gradientLayer.cornerRadius = cornerRadius;
@@ -253,6 +254,7 @@
 {
     objc_setAssociatedObject(self, @selector(shadowColor), shadowColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     self.getStyleLayer.shadowColor = shadowColor.CGColor;
+    self.getStyleLayer.shadowOpacity = 1;
 }
 
 ///阴影半径
@@ -275,10 +277,8 @@
 
 //阴影layer
 - (CALayer *)getStyleLayer{
-    if (self.shadowColor && self.clipsToBounds) {
+    if (self.shadowColor && ([self isKindOfClass:[UIImageView class]] || self.clipsToBounds)) {
         if (!self.shadowView) {
-            
-            
             self.shadowView = [[UIView alloc] init];
             self.shadowView.backgroundColor = self.backgroundColor;
             
@@ -400,9 +400,9 @@
     if (colorA && colorB) {
         if (!self.gradientLayer) {
             self.gradientLayer = [CAGradientLayer layer];
-            [self.superview.layer insertSublayer:self.gradientLayer below:self.layer];
+            [self.layer insertSublayer:self.gradientLayer below:self.layer];
         }
-        self.gradientLayer.frame = self.frame;
+        self.gradientLayer.frame = self.bounds;
         
         self.gradientLayer.colors = @[(__bridge id)colorA.CGColor, (__bridge id)colorB.CGColor];
         //            self.gradientLayer.locations = @[@0.5, @0.5];
@@ -465,7 +465,7 @@
         self.shadowView.frame = self.frame;
     }
     if (self.gradientLayer) {
-        self.gradientLayer.frame = self.frame;
+        self.gradientLayer.frame = self.bounds;
     }
     
     if (self.shadowView.layer && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
@@ -474,7 +474,7 @@
     }
     [self setLayerCcircleRadius];
     self.lastSize = NSStringFromCGSize(self.frame.size);
-
+    
 }
 
 - (void)hj_removeFromSuperview
