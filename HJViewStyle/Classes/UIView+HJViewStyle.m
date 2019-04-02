@@ -38,9 +38,8 @@
 ///设置角圆角
 - (void)setRound:(CACornerMask)maskedCorners
 {
-    if ([self isKindOfClass:[UIImageView class]]) {
-        self.clipsToBounds = true;
-    }
+    self.clipsToBounds = true;
+
     if (@available(iOS 11.0, *)) {
         self.layer.maskedCorners = maskedCorners;
         self.shadowView.layer.maskedCorners = maskedCorners;
@@ -215,9 +214,8 @@
 ///设置圆角
 - (void)setLayerCornerRadius:(CGFloat)cornerRadius
 {
-    if ([self isKindOfClass:[UIImageView class]]) {
-        self.clipsToBounds = true;
-    }
+    self.clipsToBounds = true;
+
     self.layer.cornerRadius = cornerRadius;
     self.getStyleLayer.cornerRadius = cornerRadius;
     self.gradientLayer.cornerRadius = cornerRadius;
