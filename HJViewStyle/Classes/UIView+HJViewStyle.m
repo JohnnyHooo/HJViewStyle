@@ -469,6 +469,7 @@
     if (self.shadowView.layer && !self.roundTop && !self.roundBottom && !self.roundLeft && !self.roundRight) {
         //设置阴影路径
         self.shadowView.layer.shadowPath = self.layer.shadowPath;
+        self.layer.shadowPath = self.layer.shadowPath;
     }
     [self setLayerCcircleRadius];
     self.lastSize = NSStringFromCGSize(self.frame.size);
