@@ -1,22 +1,22 @@
 {
   "name": "HJViewStyle",
-  "version": "0.1.0",
+  "version": "1.2.6",
   "summary": "A short description of HJViewStyle.",
   "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/Johnny/HJViewStyle",
+  "homepage": "https://github.com/JohnnyHooo/HJViewStyle",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
   },
   "authors": {
-    "Johnny": "hujin123@vip.qq.com"
+    "JohnnyHooo": "hujin123@vip.qq.com"
   },
   "source": {
-    "git": "https://github.com/Johnny/HJViewStyle.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/JohnnyHooo/HJViewStyle.git",
+    "tag": "1.2.6"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0"
   },
   "source_files": "HJViewStyle/Classes/**/*"
 }
