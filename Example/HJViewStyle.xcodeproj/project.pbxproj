@@ -52,7 +52,7 @@
 		0DAA311E21D07D2B00E4AA6B /* HJViewStyle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = HJViewStyle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DBAABC621CB7F7400EB68B7 /* UIView+HJTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+HJTheme.h"; sourceTree = "<group>"; };
 		0DBAABC721CB7F7400EB68B7 /* UIView+HJTheme.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+HJTheme.m"; sourceTree = "<group>"; };
-		0E9D966F257E47F1122396FB /* HJViewStyle.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HJViewStyle.podspec; path = ../HJViewStyle.podspec; sourceTree = "<group>"; };
+		0E9D966F257E47F1122396FB /* HJViewStyle.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = HJViewStyle.podspec; path = ../HJViewStyle.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		0F68EDD889C36668973679C3 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		2D069EEE93FC4A64BC2E939A /* Pods-HJViewStyle_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HJViewStyle_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-HJViewStyle_Example/Pods-HJViewStyle_Example.release.xcconfig"; sourceTree = "<group>"; };
 		3B864B7A5C948F2F41220BCB /* Pods_HJViewStyle_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HJViewStyle_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
