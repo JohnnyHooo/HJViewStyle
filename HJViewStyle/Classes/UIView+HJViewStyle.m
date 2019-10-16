@@ -478,13 +478,13 @@
 
 - (void)hj_removeFromSuperview
 {
-    [self hj_removeFromSuperview];
     if (self.shadowView) {
         [self.shadowView removeFromSuperview];
     }
     if (self.gradientLayer) {
         [self.gradientLayer removeFromSuperlayer];
     }
+    [self hj_removeFromSuperview];
 }
 
 
